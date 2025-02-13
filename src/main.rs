@@ -19,7 +19,7 @@ pub fn verify_two_thirds_signatures(
 
     let mut signed_key_indices = HashSet::new();
 
-    'signature_loop: for sig in signatures {
+    for sig in signatures {
         for (idx, pk) in public_keys.iter().enumerate() {
             if signed_key_indices.contains(&idx) {
                 continue;
@@ -27,7 +27,7 @@ pub fn verify_two_thirds_signatures(
 
             if secp.verify_ecdsa(&msg, sig, pk).is_ok() {
                 signed_key_indices.insert(idx);
-                continue 'signature_loop;
+                break;
             }
         }
     }
